@@ -7,6 +7,7 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -17,8 +18,8 @@ class _BottomNavState extends State<BottomNav> {
             label: "Home"
         ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.format_list_bulleted_rounded),
-            label: "List"
+            icon: Icon(Icons.category_rounded),
+            label: "Categories"
         ),
         BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -33,6 +34,19 @@ class _BottomNavState extends State<BottomNav> {
             label: "Account"
         )
       ],
+      onTap: (index) {
+        setState(() {
+          _selectedIndex=index;
+        });
+        switch (index) {
+          case 0:
+            Navigator.pushReplacementNamed(context, 'home');
+            break;
+          case 1:
+            Navigator.pushReplacementNamed(context, 'categories');
+            break;
+        }
+      },
     );
   }
 }

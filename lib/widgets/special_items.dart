@@ -16,14 +16,23 @@ class SpecialItems extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        _ItemsList(),
+        _ItemsList(
+          onItemTap: (imagePath, title) {
+            Navigator.pushNamed(
+              context,
+              'product',
+              arguments: {'imagePath': imagePath, 'title': title},
+            );
+          },
+        ),
       ],
     );
   }
 }
 
 class _ItemsList extends StatelessWidget {
-  _ItemsList();
+  final Function(String, String) onItemTap;
+  _ItemsList({required this.onItemTap});
 
   final List<String> imageText = [
     'Laptops',
@@ -43,7 +52,11 @@ class _ItemsList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: imagePaths.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
+          return GestureDetector(
+            onTap: () {
+              onItemTap(imagePaths[index], imageText[index]);
+            },
+          child: Container(
             margin: const EdgeInsets.all(8.0),
             child: Stack(
               children: [
@@ -72,6 +85,7 @@ class _ItemsList extends StatelessWidget {
                 ),
               ],
             ),
+          ),
           );
         },
       ),

@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FeaturedProducts extends StatelessWidget {
+class FeaturedProducts extends StatefulWidget {
   const FeaturedProducts({super.key});
 
+  @override
+  State<FeaturedProducts> createState() => _FeaturedProductsState();
+}
+
+class _FeaturedProductsState extends State<FeaturedProducts> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,14 +23,24 @@ class FeaturedProducts extends StatelessWidget {
           ),
         ),
         SizedBox(height: 5,),
-        _ItemsList(),
+        _ItemsList(
+          onItemTap: (imagePath, title) {
+            // Navigate to the product page with the selected item's data
+            Navigator.pushNamed(
+              context,
+              'product',
+              arguments: {'imagePath': imagePath, 'title': title},
+            );
+          },
+        ),
       ],
     );
   }
 }
 
 class _ItemsList extends StatelessWidget {
-  _ItemsList();
+  final Function(String, String) onItemTap;
+  _ItemsList({required this.onItemTap});
 
   final List<String> imageText = [
     'IPad',
@@ -45,34 +60,40 @@ class _ItemsList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: imagePaths.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.all(8.0),
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    imagePaths[index],
-                    width: 200,
-                    height: 150,
-                    fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () {
+              // Call the callback function with the selected item's data
+              onItemTap(imagePaths[index], imageText[index]);
+            },
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      imagePaths[index],
+                      width: 200,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      imageText[index],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        imageText[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

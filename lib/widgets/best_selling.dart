@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BestSelling extends StatelessWidget {
+class BestSelling extends StatefulWidget {
   const BestSelling({super.key});
 
+  @override
+  State<BestSelling> createState() => _BestSellingState();
+}
+
+class _BestSellingState extends State<BestSelling> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,14 +21,23 @@ class BestSelling extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        _ItemsList(),
+        _ItemsList(
+          onItemTap: (imagePath, title) {
+            Navigator.pushNamed(
+              context,
+              'product',
+              arguments: {'imagePath': imagePath, 'title': title},
+            );
+          },
+        ),
       ],
     );
   }
 }
 
 class _ItemsList extends StatelessWidget {
-  _ItemsList();
+  final Function(String, String) onItemTap;
+  _ItemsList({required this.onItemTap});
 
   final List<String> imageText = [
     'Headphones',
@@ -43,34 +57,39 @@ class _ItemsList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: imagePaths.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.all(8.0),
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    imagePaths[index],
-                    width: 200,
-                    height: 150,
-                    fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () {
+              onItemTap(imagePaths[index], imageText[index]);
+            },
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      imagePaths[index],
+                      width: 200,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      imageText[index],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        imageText[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
