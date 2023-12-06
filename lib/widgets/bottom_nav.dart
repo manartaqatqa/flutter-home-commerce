@@ -27,7 +27,7 @@ class _BottomNavState extends State<BottomNav> {
         ),
         BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
-            label: "Favorite"
+            label: "WishList"
         ),
         BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
@@ -44,6 +44,15 @@ class _BottomNavState extends State<BottomNav> {
             break;
           case 1:
             Navigator.pushReplacementNamed(context, 'categories');
+            break;
+          case 2:
+            Navigator.pushReplacementNamed(context, 'search');
+            break;
+          case 3:
+            Navigator.pushReplacementNamed(context, 'wishList');
+            break;
+          case 4:
+            Navigator.pushReplacementNamed(context, 'account');
             break;
         }
       },
