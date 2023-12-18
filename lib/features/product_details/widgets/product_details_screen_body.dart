@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-class Product extends StatefulWidget {
-  const Product({super.key});
+class ProductDetailsScreenBody extends StatefulWidget {
+  const ProductDetailsScreenBody({super.key});
 
   @override
-  State<Product> createState() => _ProductState();
+  State<ProductDetailsScreenBody> createState() => _ProductDetailsScreenBodyState();
 }
 
-class _ProductState extends State<Product> {
+class _ProductDetailsScreenBodyState extends State<ProductDetailsScreenBody> {
   late String imagePath;
   late String title;
   @override
@@ -17,34 +16,32 @@ class _ProductState extends State<Product> {
 
     imagePath = arguments['imagePath'] ?? '';
     title = arguments['title'] ?? '';
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              imagePath,
-              height: 400,
-              fit: BoxFit.cover,
-            ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Image.asset(
+            imagePath,
+            height: 400,
+            fit: BoxFit.cover,
           ),
-          Positioned(
-            top: 350,
-            left: 0,
-            right: 0,
-            bottom: 0,
+        ),
+        Positioned(
+          top: 350,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+            ),
             child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
-                ),
-              child: Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 25),
                   child: Column(
@@ -56,9 +53,9 @@ class _ProductState extends State<Product> {
                           Text(
                             '\$ 2452.75',
                             style: TextStyle(
-                              color: Colors.deepPurpleAccent,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
+                                color: Colors.deepPurpleAccent,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
                           Icon(Icons.favorite,color: Colors.red,)
@@ -68,8 +65,8 @@ class _ProductState extends State<Product> {
                       Text(
                         title,
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
                         ),
                       ),
                       SizedBox(height: 15,),
@@ -88,8 +85,8 @@ class _ProductState extends State<Product> {
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                            color:Colors.grey[400],
-                            height: 2
+                              color:Colors.grey[400],
+                              height: 2
                           ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
@@ -125,41 +122,40 @@ class _ProductState extends State<Product> {
                     ],
                   ),
                 )
-              ),
             ),
           ),
-          Positioned(
-            bottom: 16,
-            left: 30,
-            right: 30,
-            child: ElevatedButton(
+        ),
+        Positioned(
+          bottom: 16,
+          left: 30,
+          right: 30,
+          child: ElevatedButton(
+            onPressed: () {
+              // Handle button press
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
+              minimumSize: MaterialStateProperty.all(Size(180, 55)),
+            ),
+            child: Text('Add to Cart'),
+          ),
+        ),
+        Positioned(
+          top: 45,
+          left: 25,
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: FloatingActionButton(
               onPressed: () {
-                // Handle button press
+                Navigator.pop(context);
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
-                minimumSize: MaterialStateProperty.all(Size(180, 55)),
-              ),
-              child: Text('Add to Cart'),
+              backgroundColor: Colors.white,
+              child: Icon(Icons.arrow_back_ios, color: Colors.grey[800]),
             ),
           ),
-          Positioned(
-            top: 45,
-            left: 25,
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                backgroundColor: Colors.white,
-                child: Icon(Icons.arrow_back_ios, color: Colors.grey[800]),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

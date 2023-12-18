@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:home_commerce/widgets/best_selling.dart';
+import 'package:home_commerce/features/home/widgets/best_selling.dart';
 import 'package:home_commerce/widgets/bottom_nav.dart';
-import 'package:home_commerce/widgets/featured_items.dart';
-import 'package:home_commerce/widgets/special_items.dart';
-import 'package:home_commerce/widgets/top_menu.dart';
+import 'package:home_commerce/features/home/widgets/featured_items.dart';
+import 'package:home_commerce/features/home/widgets/special_items.dart';
+import 'package:home_commerce/features/home/widgets/top_menu.dart';
 
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
