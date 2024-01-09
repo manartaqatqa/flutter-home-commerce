@@ -24,14 +24,15 @@ class AccountScreenBody extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                AccountCard(title: 'My Account', icon: Icons.account_circle, routeName: 'notifications'),
-                AccountCard(title: 'My Orders', icon: Icons.shopping_bag_outlined, routeName: 'cart'),
+                AccountCard(title: 'My Account', icon: Icons.account_circle, routeName: ''),
+                AccountCard(title: 'My Orders', icon: Icons.shopping_bag_outlined, routeName: ''),
                 AccountCard(title: 'Language Settings', icon: Icons.language_outlined, routeName: 'languages'),
                 AccountCard(title: 'Shipping Address', icon: Icons.location_on_outlined, routeName: 'shippingAddress'),
                 AccountCard(title: 'My Cards', icon: Icons.credit_card_outlined, routeName: 'myCards'),
                 AccountCard(title: 'Settings', icon: Icons.settings, routeName: ''),
                 AccountCard(title: 'Privacy Policy', icon: Icons.policy_outlined, routeName: ''),
                 AccountCard(title: 'FAQ', icon: Icons.error_outline, routeName: ''),
+                AccountCard(title: 'Logout', icon: Icons.logout, routeName: 'logout'),
               ],
             ),
           ),

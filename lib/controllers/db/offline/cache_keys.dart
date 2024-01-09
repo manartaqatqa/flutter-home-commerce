@@ -1,0 +1,5 @@
+enum CacheKeys {
+  token,
+  isLogin,
+}
+

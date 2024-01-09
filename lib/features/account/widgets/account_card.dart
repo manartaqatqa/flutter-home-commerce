@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_commerce/controllers/db/offline/cache_keys.dart';
+import 'package:home_commerce/controllers/db/offline/shared_helper.dart';
 class AccountCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -18,7 +20,12 @@ class AccountCard extends StatelessWidget {
         title: Text(title,style: TextStyle(color: Colors.black)),
         trailing: Icon(Icons.arrow_forward_ios_rounded),
         onTap: () {
-          if (routeName != null) {
+          if(routeName == 'logout') {
+            SharedHelper.prefs.setBool(CacheKeys.isLogin.name, false);
+            Navigator.pushNamed(context, 'login');
+            print("logout done ?");
+          }
+          else if (routeName != null) {
             Navigator.pushNamed(context, routeName!);
           } else {
           }

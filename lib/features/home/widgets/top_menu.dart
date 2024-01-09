@@ -27,29 +27,39 @@ class TopMenu extends StatelessWidget {
           ),
         ),
         SizedBox(width: 25,),
-        Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(100.0),
-          child: Container(
-              width: 50,
-              padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.shopping_cart,
-                color: Colors.deepPurpleAccent,
-              )
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, 'cart');
+          },
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(100.0),
+            child: Container(
+                width: 50,
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.deepPurpleAccent,
+                )
+            ),
           ),
         ),
         SizedBox(width: 10,),
-        Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(100.0),
-          child: Container(
-              width: 50,
-              padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.notifications_none,
-                color: Colors.deepPurpleAccent,
-              )
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, 'notifications');
+          },
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(100.0),
+            child: Container(
+                width: 50,
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.notifications_none,
+                  color: Colors.deepPurpleAccent,
+                )
+            ),
           ),
         ),
       ],

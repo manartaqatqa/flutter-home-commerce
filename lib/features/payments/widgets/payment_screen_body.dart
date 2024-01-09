@@ -1,7 +1,23 @@
+
 import 'package:flutter/material.dart';
+import 'package:home_commerce/features/main_screen/main_screen.dart';
 class PaymentScreenBody extends StatelessWidget {
   const PaymentScreenBody({super.key});
-
+Route _buildRoute() {
+  return PageRouteBuilder(
+      pageBuilder: (context,animation,secondaryAnimation) => const MainScreen(),
+    transitionDuration: Duration(seconds: 2),
+    transitionsBuilder: (context,animation,secondaryAnimation,child) {
+        return SlideTransition(
+            position: animation.drive(Tween(begin: const Offset(-1,0),end: Offset.zero)),
+      child: FadeTransition(
+      opacity: animation.drive(Tween(begin:0.0,end: 1.0)),
+      child: child,
+      )
+        );
+    }
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +43,7 @@ class PaymentScreenBody extends StatelessWidget {
         SizedBox(height: 20,),
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'home' );
+            Navigator.push(context, _buildRoute() );
           },
           child: Text('Continue Shopping',style: TextStyle(fontSize: 16),),
           style: ButtonStyle(

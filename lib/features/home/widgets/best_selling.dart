@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_commerce/controllers/db/online/dio_helper.dart';
+import 'package:home_commerce/models/productsEntity.dart';
 
 class BestSelling extends StatefulWidget {
   const BestSelling({super.key});
@@ -21,79 +23,93 @@ class _BestSellingState extends State<BestSelling> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        _ItemsList(
-          onItemTap: (imagePath, title) {
-            Navigator.pushNamed(
-              context,
-              'product',
-              arguments: {'imagePath': imagePath, 'title': title},
-            );
+        FutureBuilder(
+          future: DioHelper.dio
+              .get("https://api.escuelajs.co/api/v1/products"),
+          builder: (context,snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return Center(child:CircularProgressIndicator());
+            } else if (snapshot.hasData && snapshot.data!.statusCode==200){
+              List <Products> products = [];
+              for(var element in snapshot.data!.data){
+                products.add(Products.fromJson(element));
+              }
+              return SizedBox(
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    products[index].images?[0] ?? "" ,
+                                    width: 130,
+                                    height: 135,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child:
+                                        Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.deepPurpleAccent,
+                                        )
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width:90,
+                              child: Text(
+                                products[index].title ?? "",
+                                style: const TextStyle(
+                                    fontSize: 15
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '\$ ${products[index].price ?? ""}',
+                              style: TextStyle(
+                                  color: Colors.deepPurpleAccent,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  // itemCount:products.length,
+                ),
+              );
+            }
+            else {
+              return Text('Error');
+            }
           },
         ),
       ],
-    );
-  }
-}
-
-class _ItemsList extends StatelessWidget {
-  final Function(String, String) onItemTap;
-  _ItemsList({required this.onItemTap});
-
-  final List<String> imageText = [
-    'Headphones',
-    'Phones',
-  ];
-
-  final List<String> imagePaths = [
-    'images/headphones.jpg',
-    'images/phone.jpg',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: imagePaths.length,
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              onItemTap(imagePaths[index], imageText[index]);
-            },
-            child: Container(
-              margin: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      imagePaths[index],
-                      width: 200,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        imageText[index],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
